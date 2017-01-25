@@ -5,6 +5,8 @@ var app = express();
 
 var port = process.env.PORT || 3000;
 
+app.use(require('connect-livereload')({port: 35680}));
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/resources', express.static(path.join(__dirname, 'resources')));

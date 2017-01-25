@@ -1,0 +1,94 @@
+.bundle-display {
+    margin: 0 auto;
+    text-align: center;
+    width: 1066px;
+
+    .heading {
+        font-size: 30px;
+        padding: 40px 0;
+
+        &--title {
+            font-weight: 300;
+            padding-right: 5px;
+        }
+
+        &--bundle-name {
+            font-weight: 500;
+        }
+
+        &--price {
+            font-weight: 300;
+            padding-left: 5px;
+        }
+
+        &--perk {
+            display: inline-block;
+            padding-top: 10px;
+
+            &-text {
+                display: inline-block;
+                font-size: 13px;
+                font-weight: 300;
+                padding-right: 20px;
+                vertical-align: top;
+            }
+
+            &-icon {
+                background-image: url(/resources/img/icons_sprite.png);
+                display: inline-block;
+                height: 30px;
+                width: 30px;
+
+                &_heart {
+                    background-position: -2px -9px;
+                }
+
+                &_mouse {
+                    background-position: -30px -9px;
+                }
+
+                &_lock {
+                    background-position: -60px -7px;
+                }
+            }
+        }
+
+        &--clock {
+            background-color: #bcbcbc;
+            border-radius: 5px;
+            border: 1px solid gray;
+            display: inline-block;
+            font-size: 13px;
+            height: 35px;
+            margin-top: 3px;
+            vertical-align: top;
+            width: 170px;
+
+            &-icon {
+                background-image: url(/resources/img/icons_sprite.png);
+                background-position: -3px -37px;
+                display: inline-block;
+                height: 30px;
+                margin-right: 16px;
+                position: relative;
+                width: 30px;
+            }
+
+            &-legend {
+                bottom: -8px;
+                display: inline-block;
+                position: relative;
+                right: 5px;
+                vertical-align: top;
+            }
+
+            &-text {
+                font-weight: 300;
+            }
+
+            &-time {
+                padding: 0 5px;
+            }
+        }
+    }
+}
