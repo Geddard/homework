@@ -1,0 +1,51 @@
+.navbar {
+    background-image: linear-gradient(to bottom, #e5e5e5, #dedede);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    height: 56px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    &--items-container {
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+        text-align: center;
+        width: 1066px;
+
+        &-logo {
+        left: 30px;
+        position: absolute;
+
+            &-image {
+                background-image: url(/resources/img/gog_sprite.png);
+                background-position: 60px -57px;
+                background-size: 120px;
+                height: 50px;
+                width: 57px;
+            }
+        }
+
+        &-item {
+            color: #000;
+            display: inline-block;
+            font-size: 13px;
+            font-weight: bold;
+            height: 100%;
+            text-decoration: none;
+            text-transform: uppercase;
+            width: 20%;
+
+            &:hover {
+                background-color: #ebebeb;
+                transition: .5s;
+            }
+
+            .item-text {
+                position: absolute;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
