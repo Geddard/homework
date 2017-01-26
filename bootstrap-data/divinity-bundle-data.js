@@ -1,5 +1,5 @@
-export default {
-    'heading': {
+var data = {
+    'header': {
         'title': 'Pay what you want for the',
         'bundleName': 'Divinity Bundle',
         'regularPrice': '($32 value!)',
@@ -18,6 +18,23 @@ export default {
             }
         ]
     },
+    'games': [
+        {
+            'link': 'Divine Divinity',
+            'normalPrice': '(normal price $5.99)',
+            'goodies': 'with 6 goodies and 4 language versions'
+        },
+        {
+            'link': 'Beyond Divinity',
+            'normalPrice': '(normal price $5.99)',
+            'goodies': 'with 6 goodies and 4 language versions'
+        },
+        {
+            'link': 'Divinity 2',
+            'normalPrice': '(normal price $19.99)',
+            'goodies': 'with 9 goodies and 7 language versions'
+        }
+    ],
     'footer': {
         'goodies': {
             'title': 'Goodies available for free with Divinity Bundle',
@@ -56,3 +73,8 @@ export default {
         }
     }
 }
+
+export default data;
+export var headerData = data.header;
+export var gamesData = data.games;
+export var footerData = data.footer;
