@@ -70,6 +70,20 @@ var data = {
                     'subTitle': '3 manuals, 56 artworks, 5 avatars, Beyond Divinity game-guide.'
                 }
             ]
+        },
+        'gamesSold': {
+            'title': 'Games sold so far',
+            'firstGoal': {
+                'currentAmount': 'React 25.000' ,
+                'goalDescription': '...to unlock exclusive, never before seen, trailer from Divinity: Original Sin.'
+            },
+            'milestones': [
+                5000,
+                25000,
+                50000,
+                80000,
+                100000
+            ]
         }
     }
 }

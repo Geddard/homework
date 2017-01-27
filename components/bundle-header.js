@@ -76,7 +76,7 @@ class BundleHeader extends React.Component {
     }
 
     getPerkIconClass(perk) {
-        return classNames('bundle-header--perk-icon', 'bundle-header--perk-icon_' + perk.icon)
+        return classNames('bundle-header--perk-icon', 'bundle-header--perk-icon_' + perk.icon);
     }
 
     addLeadingZero(amount) {
