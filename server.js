@@ -9,7 +9,7 @@ app.use(require('connect-livereload')({port: 35680}));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/resources', express.static(path.join(__dirname, 'resources')));
+app.use('/res', express.static(path.join(__dirname, 'resources')));
 
 app.listen(port, function(){
     console.log('Started listening on port', port);

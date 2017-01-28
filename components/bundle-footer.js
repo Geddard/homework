@@ -15,9 +15,9 @@ class BundleFooter extends React.Component {
 
     renderGoodies() {
         return (
-            <div className="footer-goodies">
-                <div className="footer-goodies--title">
-                    <div className="footer-goodies--title-text">
+            <div className="goodies">
+                <div className="goodies--title">
+                    <div className="goodies--title-text">
                         {footerData.goodies.title}
                     </div>
                     {footerData.goodies.items.map((item, index) => this.renderGoodie(item, index))}
@@ -27,15 +27,24 @@ class BundleFooter extends React.Component {
     }
 
     renderGoals() {
+        var gamesSoldData = footerData.gamesSold;
+        var currentGoalData = gamesSoldData.currentGoal;
+
         return (
-            <div className="footer-goals">
-                <div className="footer-goals--title">
-                    <div className="footer-goals--title-text">
-                        {footerData.gamesSold.title}
+            <div className="goals">
+                <div className="goals--title">
+                    <div className="goals--title-text">
+                        {gamesSoldData.title}
                     </div>
-                    <div>
-                        022576
+                    <div className="goals--numbers" />
+                    <div className="goals--current-title">
+                        {currentGoalData.currentAmount}
                     </div>
+                    <div className="goals--current-description">
+                        {currentGoalData.goalDescription}
+                    </div>
+                    {this.renderThumbnailSection()}
+                    <div className="goals--milestones" />
                 </div>
             </div>
         );
@@ -51,6 +60,16 @@ class BundleFooter extends React.Component {
                 <div className="item--subtitle">
                     {item.subTitle}
                 </div>
+            </div>
+        );
+    }
+
+    renderThumbnailSection() {
+        return (
+            <div className="goals--thumbnail-section">
+                <div className="goals--arrow" />
+                <div className="goals--thumbnail-image" />
+                <div className="goals--arrow goals--arrow_left" />
             </div>
         );
     }

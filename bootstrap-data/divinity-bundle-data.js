@@ -73,17 +73,10 @@ var data = {
         },
         'gamesSold': {
             'title': 'Games sold so far',
-            'firstGoal': {
-                'currentAmount': 'React 25.000' ,
+            'currentGoal': {
+                'currentAmount': 'Reach 25.000...',
                 'goalDescription': '...to unlock exclusive, never before seen, trailer from Divinity: Original Sin.'
-            },
-            'milestones': [
-                5000,
-                25000,
-                50000,
-                80000,
-                100000
-            ]
+            }
         }
     }
 }

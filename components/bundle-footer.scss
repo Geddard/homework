@@ -1,6 +1,6 @@
 .bundle-footer {
 
-    .footer-goodies {
+    .goodies {
         float: left;
         width: 600px;
 
@@ -41,7 +41,7 @@
             }
 
             &--icon {
-                background-image: url(/resources/img/icons_sprite.png);
+                background-image: url(/res/img/icons_sprite.png);
                 display: inline-block;
                 height: 30px;
                 width: 30px;
@@ -73,7 +73,7 @@
         }
     }
 
-    .footer-goals {
+    .goals {
         float: right;
         width: 400px;
 
@@ -93,6 +93,56 @@
                 top: -11px;
                 transform: translateX(-50%);
             }
+        }
+
+        &--numbers {
+            background-image: url(/res/img/goals_numbers.png);
+            height: 100px;
+            margin: 0 auto;
+            width: 228px;
+        }
+
+        &--current {
+            margin: 0 auto;
+
+            &-description {
+                font-weight: 300;
+            }
+        }
+
+        &--arrow {
+            background-image: url(/res/img/goals_button.png);
+            cursor: pointer;
+            display: inline-block;
+            height: 28px;
+            margin-bottom: 59px;
+            width: 28px;
+
+            &_left {
+                transform: scale(-1, 1);
+            }
+        }
+
+        &--thumbnail {
+
+            &-section {
+                margin: 0 auto;
+            }
+
+            &-image {
+                background-image: url(/res/img/goals_thumbnail.png);
+                display: inline-block;
+                height: 155px;
+                margin-top: 15px;
+                width: 280px;
+            }
+        }
+
+        &--milestones {
+            background-image: url(/res/img/goals_milestones.png);
+            height: 40px;
+            margin: 0 auto;
+            width: 270px;
         }
     }
 }
