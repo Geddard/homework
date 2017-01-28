@@ -1,4 +1,3 @@
-// VENDOR LIBS
 import React from 'react';
 
 class NavBar extends React.Component {
