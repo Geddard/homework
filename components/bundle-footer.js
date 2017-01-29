@@ -52,7 +52,7 @@ class BundleFooter extends React.Component {
 
     renderGoodie(item, index) {
         return (
-            <div className="item">
+            <div key={index} className="item">
                 <div className={this.getIconClass(item.icon)} />
                 <div className="item--title">
                     {item.title}

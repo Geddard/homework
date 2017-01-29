@@ -29,7 +29,7 @@
         }
 
         &-icon {
-            background-image: url(/res/img/icons_sprite.png);
+            background-image: url('/res/img/icons_sprite.png');
             display: inline-block;
             height: 30px;
             width: 30px;
@@ -50,8 +50,8 @@
 
     &--clock {
         background-color: #bcbcbc;
+        border: 1px solid #808080;
         border-radius: 5px;
-        border: 1px solid gray;
         display: inline-block;
         font-size: 13px;
         height: 35px;
@@ -60,7 +60,7 @@
         width: 170px;
 
         &-icon {
-            background-image: url(/res/img/icons_sprite.png);
+            background-image: url('/res/img/icons_sprite.png');
             background-position: -3px -37px;
             display: inline-block;
             height: 30px;

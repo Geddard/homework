@@ -62,7 +62,7 @@ class BundleHeader extends React.Component {
     }
 
     renderTimer() {
-        var minutes = Math.floor(this.state.time / 60)
+        var minutes = Math.floor(this.state.time / 60);
         var hours = Math.floor(minutes / 60);
         var seconds = this.state.time %= 60;
 
@@ -70,7 +70,7 @@ class BundleHeader extends React.Component {
 
         return (
             <span className="bundle-header--clock-time">
-                {this.addLeadingZero(hours) + ":" + this.addLeadingZero(minutes) + ":" + this.addLeadingZero(seconds)}
+                {this.addLeadingZero(hours) + ':' + this.addLeadingZero(minutes) + ':' + this.addLeadingZero(seconds)}
             </span>
         );
     }
@@ -80,7 +80,7 @@ class BundleHeader extends React.Component {
     }
 
     addLeadingZero(amount) {
-        return (amount > 9) ? amount : "0" + amount;
+        return (amount > 9) ? amount : '0' + amount;
     }
 
     countDown() {
