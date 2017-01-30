@@ -10,6 +10,7 @@ class BundleShowcase extends React.Component {
         this.state = {
             average: 7.67,
             bubbleInputValue: 14.99,
+            total: 22576,
             rangeValue: 1499,
             top: 18.31
         };
@@ -62,7 +63,9 @@ class BundleShowcase extends React.Component {
             <div ref="sliderBubble" className={this.getBubbleClass()}>
                 <div className="slider--bubble-currency">$</div>
                 <input {...this.getBubbleInputProps()}/>
-                <button className="slider--bubble-button">Checkout Now</button>
+                <button onClick={() => this.updateAverages()} className="slider--bubble-button">
+                    Checkout Now
+                </button>
             </div>
         );
     }
@@ -83,7 +86,8 @@ class BundleShowcase extends React.Component {
     getBubbleInputProps() {
         return {
             className: 'slider--bubble-input',
-            onChange: (event) => this.updatePriceFromInput(event.target.value),
+            onBlur: (event) => this.updatePriceOnInputBlur(event.target.value),
+            onChange: (event) => this.updateInputValue(event.target.value),
             type: 'text',
             value: this.state.bubbleInputValue
         };
@@ -108,14 +112,24 @@ class BundleShowcase extends React.Component {
 
     updateAveragesPosition() {
         var refs = ['average', 'top'];
-        var dotOffset = 15;
 
         refs.map(function (ref) {
             let value = this.state[ref].toString().replace('.', '');
-            let newPosition = (value / this.maxValue) * 100;
+            let valueForDot = (value > this.maxValue) ? this.maxValue : value;
+            let newPosition = (valueForDot / (this.maxValue + 50)) * 100;
 
-            this.refs[ref].style.left = 'calc(' + newPosition + '% - ' + 15 + 'px)';
+            this.refs[ref].style.left = 'calc(' + newPosition + '% - ' + 30 + 'px)';
         }.bind(this));
+    }
+
+    updateAverages() {
+        var total = this.state.total;
+        var newAvg = ((this.state.average * total) + parseFloat(this.state.bubbleInputValue)) / (total + 1);
+
+        this.setState({
+            total: total + 1,
+            average: newAvg.toFixed(2)
+        }, this.updateAveragesPosition);
     }
 
     updateRefPosition(ref, optionalOffset, rangeValue) {
@@ -126,7 +140,8 @@ class BundleShowcase extends React.Component {
             let value = rangeValue || rangeRef.value;
             let offsetModifier = optionalOffset || 1;
 
-            let sliderPosition = (value / this.maxValue) * 100;
+            let valueForSlider = (value > this.maxValue) ? this.maxValue : value;
+            let sliderPosition = (valueForSlider / this.maxValue) * 100;
             let positionOffset = Math.round(offsetModifier * sliderPosition / 99.6);
 
             refToUpdate.style.left = 'calc(' + sliderPosition + '% - ' + positionOffset + 'px)';
@@ -146,24 +161,24 @@ class BundleShowcase extends React.Component {
         });
     }
 
-    updatePriceFromInput(value) {
-        var reg = /^([0-9]{0,2}((.)[0-9]{0,2}))$/;
-        var parsedValue = parseFloat(value.replace('.', ''));
-
-        if (parsedValue > this.maxValue) {
-            parsedValue = this.maxValue;
-            value = '49.99';
-        }
+    updateInputValue(value) {
+        var reg = /^([0-9]+((.)[0-9]{0,2}))$/;
 
         if (reg.test(value)) {
             value = parseFloat(value).toFixed(2);
-            parsedValue = parseFloat(value.replace('.', ''));
 
             this.setState({
                 bubbleInputValue: value,
-                rangeValue: parsedValue
-            }, () => this.updateDrawingsPositions(parsedValue));
+            });
         }
+    }
+
+    updatePriceOnInputBlur(value) {
+        var parsedValue = parseFloat(value.replace('.', ''));
+
+        this.setState({
+            rangeValue: parsedValue
+        }, () => this.updateDrawingsPositions(parsedValue));
     }
 
     isFirefox() {
