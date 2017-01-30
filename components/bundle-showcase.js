@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -7,8 +8,11 @@ class BundleShowcase extends React.Component {
         super();
 
         this.state = {
-            bubbleInputValue: 14.99
+            bubbleInputValue: 14.99,
+            rangeValue: 1499
         };
+
+        this.maxValue = 4999;
     }
 
     componentDidMount() {
@@ -19,55 +23,76 @@ class BundleShowcase extends React.Component {
     render() {
         return (
             <div className="bundle-showcase">
-                {this.renderSliderSection()}
+                <div className="slider slider--container">
+                    <div className="slider--container-price-limit slider--container-price-limit_min">$0.99</div>
+                    {this.renderSliderSection()}
+                    {this.renderBubbleContent()}
+                    <div className="slider--container-price-limit slider--container-price-limit_max">$49.99</div>
+                </div>
             </div>
         );
     }
 
     renderSliderSection() {
-        return (
-            <div className="slider slider--container">
+        var nodeToRender = null;
+
+        if (!this.isOldIE()) {
+            nodeToRender = (
                 <div className="slider--container-range-area">
                     <input {...this.getRangeProps()} />
-                    {this.renderArrowDrawing()}
+                    <div ref="sliderArrowDrawing" className="slider--arrow" />
                 </div>
-                <div ref="sliderBubble" className="slider--bubble">
-                    <div className="slider--bubble-currency">$</div>
-                    <input {...this.getBubbleInputProps()}/>
-                    <button className="slider--bubble-button">Checkout Now</button>
-                </div>
-            </div>
-        );
+            );
+        }
+
+        return nodeToRender;
     }
 
-    renderArrowDrawing() {
-        return (!this.isFirefox()) ? <div ref="sliderArrowDrawing" className="slider--arrow" /> : null;
+    renderBubbleContent() {
+        return (
+            <div ref="sliderBubble" className={this.getBubbleClass()}>
+                <div className="slider--bubble-currency">$</div>
+                <input {...this.getBubbleInputProps()}/>
+                <button className="slider--bubble-button">Checkout Now</button>
+            </div>
+        );
     }
 
     getRangeProps() {
         return {
             className: 'slider--range',
-            max: 499,
+            max: this.maxValue,
             min: 0,
-            onChange: (event) => this.updateRangeValue(event),
+            onChange: (event) => this.updateRangeValue(event.target.value),
             ref: 'rangeRef',
             step: 1,
-            type: 'range'
+            type: 'range',
+            value: this.state.rangeValue
         };
     }
 
     getBubbleInputProps() {
         return {
             className: 'slider--bubble-input',
-            onChange: (event) => this.updatePrice(event),
+            onChange: (event) => this.updatePriceFromInput(event.target.value),
             type: 'text',
             value: this.state.bubbleInputValue
         };
     }
 
-    updateRangeValue(event) {
-        var value = event.target.value;
+    getBubbleClass() {
+        return classNames({
+            'slider--bubble': true,
+            'slider--bubble_floating': !this.isOldIE()
+        });
+    }
 
+    updateRangeValue(value) {
+        this.updateDrawingsPositions(value);
+        this.updatePriceFromRange(value);
+    }
+
+    updateDrawingsPositions(value) {
         this.updateRefPosition('sliderArrowDrawing', 15, value);
         this.updateRefPosition('sliderBubble', 201, value);
     }
@@ -80,26 +105,52 @@ class BundleShowcase extends React.Component {
             let value = rangeValue || rangeRef.value;
             let offsetModifier = optionalOffset || 0;
 
-            let sliderPosition = (value / 499) * 100;
+            let sliderPosition = (value / this.maxValue) * 100;
             let positionOffset = Math.round(offsetModifier * sliderPosition / 100);
 
             refToUpdate.style.left = 'calc(' + sliderPosition + '% - ' + positionOffset + 'px)';
         }
     }
 
-    updatePrice(event) {
-        var reg = /^\$?[0-9]+(\.[0-9][0-9])?$/;
-        var value = event.target.value;
+    updatePriceFromRange(value) {
+        var priceValue = (value / 100);
+
+        if (!priceValue) {
+            priceValue = 0.99;
+        }
+
+        this.setState({
+            bubbleInputValue: parseFloat(priceValue).toFixed(2),
+            rangeValue: value
+        });
+    }
+
+    updatePriceFromInput(value) {
+        var reg = /^([0-9]{0,2}((.)[0-9]{0,2}))$/;
+        var parsedValue = parseFloat(value.replace('.', ''));
+
+        if (parsedValue > this.maxValue) {
+            parsedValue = this.maxValue;
+            value = '49.99';
+        }
 
         if (reg.test(value)) {
+            value = parseFloat(value).toFixed(2);
+            parsedValue = parseFloat(value.replace('.', ''));
+
             this.setState({
-                bubbleInputValue: event.target.value
-            });
+                bubbleInputValue: value,
+                rangeValue: parsedValue
+            }, () => this.updateDrawingsPositions(parsedValue));
         }
     }
 
     isFirefox() {
         return typeof InstallTrigger !== 'undefined';
+    }
+
+    isOldIE() {
+        return (navigator.userAgent.indexOf('MSIE') != -1 ) || !!document.documentMode;
     }
 }
 
