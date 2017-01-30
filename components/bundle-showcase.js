@@ -142,7 +142,7 @@ class BundleShowcase extends React.Component {
 
             let valueForSlider = (value > this.maxValue) ? this.maxValue : value;
             let sliderPosition = (valueForSlider / this.maxValue) * 100;
-            let positionOffset = Math.round(offsetModifier * sliderPosition / 99.6);
+            let positionOffset = Math.round((offsetModifier * sliderPosition) / 98.65);
 
             refToUpdate.style.left = 'calc(' + sliderPosition + '% - ' + positionOffset + 'px)';
         }
