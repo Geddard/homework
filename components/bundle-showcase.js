@@ -8,8 +8,10 @@ class BundleShowcase extends React.Component {
         super();
 
         this.state = {
+            average: 7.67,
             bubbleInputValue: 14.99,
-            rangeValue: 1499
+            rangeValue: 1499,
+            top: 18.31
         };
 
         this.maxValue = 4999;
@@ -17,7 +19,8 @@ class BundleShowcase extends React.Component {
 
     componentDidMount() {
         this.updateRefPosition('sliderArrowDrawing', 15);
-        this.updateRefPosition('sliderBubble', 201);
+        this.updateRefPosition('sliderBubble', 200);
+        this.updateAveragesPosition();
     }
 
     render() {
@@ -39,6 +42,12 @@ class BundleShowcase extends React.Component {
         if (!this.isOldIE()) {
             nodeToRender = (
                 <div className="slider--container-range-area">
+                    <div ref="average" className="slider--container-average">
+                        ${this.state.average} (Average)
+                    </div>
+                    <div ref="top" className="slider--container-average">
+                        ${this.state.top} (Top 10%)
+                    </div>
                     <input {...this.getRangeProps()} />
                     <div ref="sliderArrowDrawing" className="slider--arrow" />
                 </div>
@@ -94,7 +103,19 @@ class BundleShowcase extends React.Component {
 
     updateDrawingsPositions(value) {
         this.updateRefPosition('sliderArrowDrawing', 15, value);
-        this.updateRefPosition('sliderBubble', 201, value);
+        this.updateRefPosition('sliderBubble', 200, value);
+    }
+
+    updateAveragesPosition() {
+        var refs = ['average', 'top'];
+        var dotOffset = 15;
+
+        refs.map(function (ref) {
+            let value = this.state[ref].toString().replace('.', '');
+            let newPosition = (value / this.maxValue) * 100;
+
+            this.refs[ref].style.left = 'calc(' + newPosition + '% - ' + 15 + 'px)';
+        }.bind(this));
     }
 
     updateRefPosition(ref, optionalOffset, rangeValue) {
@@ -103,10 +124,10 @@ class BundleShowcase extends React.Component {
 
         if (refToUpdate) {
             let value = rangeValue || rangeRef.value;
-            let offsetModifier = optionalOffset || 0;
+            let offsetModifier = optionalOffset || 1;
 
             let sliderPosition = (value / this.maxValue) * 100;
-            let positionOffset = Math.round(offsetModifier * sliderPosition / 100);
+            let positionOffset = Math.round(offsetModifier * sliderPosition / 99.6);
 
             refToUpdate.style.left = 'calc(' + sliderPosition + '% - ' + positionOffset + 'px)';
         }

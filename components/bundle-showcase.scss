@@ -13,12 +13,29 @@
 
         &--container {
             background-color: #e5e5e5;
+            border-radius: 5px;
             border-top: 1px solid #ccc;
             bottom: 0;
             height: 170px;
             left: 0;
             position: absolute;
             width: 100%;
+
+            &-average {
+                font-size: 10px;
+                font-weight: 300;
+                position: absolute;
+                top: 10px;
+
+                &::after {
+                    color: #5A5858;
+                    content: '\25CF';
+                    font-size: 12px;
+                    left: 15px;
+                    position: absolute;
+                    top: 18px;
+                }
+            }
 
             &-price-limit {
                 position: absolute;
@@ -59,12 +76,11 @@
             }
 
             &::-moz-range-track, {
-                background: #afcf00;
-                border: .2px solid #010101;
-                border-radius: 1.3px;
-                box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
+                background-image: linear-gradient(to bottom, #afcf00, #8FA800);
+                border: 1px solid #010101;
+                border-radius: 10px;
                 cursor: pointer;
-                height: 8.4px;
+                height: 15px;
                 width: 100%;
             }
 
