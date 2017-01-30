@@ -1,0 +1,145 @@
+.bundle-showcase {
+    background-image: url('/res/img/slider_background.png');
+    border-radius: 5px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
+    height: 444px;
+    margin: 0 auto 60px;
+    position: relative;
+    width: 950px;
+
+    .slider {
+        position: relative;
+        width: 80%;
+
+        &--container {
+            background-color: #e5e5e5;
+            border-top: 1px solid #ccc;
+            bottom: 0;
+            height: 170px;
+            left: 0;
+            position: absolute;
+            width: 100%;
+
+            &-range-area {
+                margin: auto;
+                position: relative;
+                width: 760px;
+            }
+        }
+
+        &--range {
+            margin-top: 30px;
+            width: 100%;
+
+            &::-webkit-slider-runnable-track {
+                background-image: linear-gradient(to bottom, #afcf00, #8FA800);
+                border: 1px solid #010101;
+                border-radius: 10px;
+                cursor: pointer;
+                height: 15px;
+                width: 100%;
+            }
+
+            &::-webkit-slider-thumb {
+                margin-top: -5px;
+            }
+
+            &::-moz-range-track, {
+                background: #afcf00;
+                border: .2px solid #010101;
+                border-radius: 1.3px;
+                box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
+                cursor: pointer;
+                height: 8.4px;
+                width: 100%;
+            }
+        }
+
+        &--arrow {
+            background-image: linear-gradient(to bottom, #e5e5e5, #dedede);
+            border: 1px solid #cac4c4;
+            border-radius: 2px;
+            height: 25px;
+            pointer-events: none;
+            position: absolute;
+            top: 25px;
+            width: 16px;
+            z-index: 100;
+
+            &::before {
+                border-left: solid 8px transparent;
+                border-right: solid 8px transparent;
+                border-top: solid 8px #cac4c4;
+                content: '';
+                left: 0;
+                position: absolute;
+                top: calc(100% + 1px);
+            }
+
+            &::after {
+                border-left: solid 8px transparent;
+                border-right: solid 8px transparent;
+                border-top: solid 8px #dedede;
+                content: '';
+                left: 0;
+                position: absolute;
+                top: 100%;
+            }
+        }
+
+        &--bubble {
+            background-image: linear-gradient(to bottom, #A6A6A6, #ccc);
+            border-radius: 5px;
+            height: 57px;
+            position: absolute;
+            top: 64px;
+
+            &::before {
+                border-bottom: solid 8px #A6A6A6;
+                border-left: solid 8px transparent;
+                border-right: solid 8px transparent;
+                bottom: 100%;
+                content: '';
+                left: 93px;
+                position: absolute;
+            }
+
+            &-input {
+                background: transparent;
+                border: 0;
+                color: #718405;
+                display: inline-block;
+                font-size: 20px;
+                font-weight: bold;
+                height: 30px;
+                margin: 10px 5px 0 20px;
+                width: 55px;
+            }
+
+            &-button {
+                background-image: linear-gradient(to bottom, #afcf00, #8FA800);
+                border: 1px solid #636363;
+                border-radius: 6px;
+                color: #464545;
+                cursor: pointer;
+                font-weight: bold;
+                height: 35px;
+                margin-right: 10px;
+
+                &:active {
+                    background-image: linear-gradient(to top, #afcf00, #8FA800);
+                }
+            }
+
+            &-currency {
+                color: #718405;
+                display: inline-block;
+                font-size: 20px;
+                font-weight: bold;
+                left: 5px;
+                position: absolute;
+                top: 12px;
+            }
+        }
+    }
+}
