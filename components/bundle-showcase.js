@@ -48,24 +48,18 @@ class BundleShowcase extends React.Component {
     }
 
     renderSliderSection() {
-        var nodeToRender = null;
-
-        if (!this.isOldIE()) {
-            nodeToRender = (
-                <div className="slider--container-range-area">
-                    <div ref="average" className={this.getAverageClass('average')}>
-                        ${this.state.average} (Average)
-                    </div>
-                    <div ref="top" className={this.getAverageClass()}>
-                        ${this.state.top} (Top 10%)
-                    </div>
-                    <input {...this.getRangeProps()} />
-                    <div ref="sliderArrowDrawing" className="slider--arrow" />
+        return (
+            <div className="slider--container-range-area">
+                <div ref="average" className={this.getAverageClass('average')}>
+                    ${this.state.average} (Average)
                 </div>
-            );
-        }
-
-        return nodeToRender;
+                <div ref="top" className={this.getAverageClass()}>
+                    ${this.state.top} (Top 10%)
+                </div>
+                <input {...this.getRangeProps()} />
+                <div ref="sliderArrowDrawing" className="slider--arrow" />
+            </div>
+        );
     }
 
     renderBubbleContent() {
@@ -226,14 +220,6 @@ class BundleShowcase extends React.Component {
 
         return (top - average) < minDifference ||
             (this.maxPrice - average) < minDifference && (this.maxPrice - top) < minDifference;
-    }
-
-    isFirefox() {
-        return typeof InstallTrigger !== 'undefined';
-    }
-
-    isOldIE() {
-        return (navigator.userAgent.indexOf('MSIE') != -1 ) || !!document.documentMode;
     }
 }
 
