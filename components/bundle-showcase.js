@@ -7,15 +7,25 @@ class BundleShowcase extends React.Component {
     constructor() {
         super();
 
+        this.topSales = [
+            18.31,
+            19.50,
+            18.00,
+            18.50,
+            18.45
+        ];
+        this.maxValue = 4999;
+        this.maxPrice = 49.99;
+
+        // Initial State
         this.state = {
             average: 7.67,
+            averagesOverlap: false,
             bubbleInputValue: 14.99,
-            total: 22576,
             rangeValue: 1499,
-            top: 18.31
+            top: 19.50,
+            total: 20
         };
-
-        this.maxValue = 4999;
     }
 
     componentDidMount() {
@@ -31,7 +41,7 @@ class BundleShowcase extends React.Component {
                     <div className="slider--container-price-limit slider--container-price-limit_min">$0.99</div>
                     {this.renderSliderSection()}
                     {this.renderBubbleContent()}
-                    <div className="slider--container-price-limit slider--container-price-limit_max">$49.99</div>
+                    <div className="slider--container-price-limit slider--container-price-limit_max">${this.maxPrice}</div>
                 </div>
             </div>
         );
@@ -43,10 +53,10 @@ class BundleShowcase extends React.Component {
         if (!this.isOldIE()) {
             nodeToRender = (
                 <div className="slider--container-range-area">
-                    <div ref="average" className="slider--container-average">
+                    <div ref="average" className={this.getAverageClass('average')}>
                         ${this.state.average} (Average)
                     </div>
-                    <div ref="top" className="slider--container-average">
+                    <div ref="top" className={this.getAverageClass()}>
                         ${this.state.top} (Top 10%)
                     </div>
                     <input {...this.getRangeProps()} />
@@ -70,6 +80,13 @@ class BundleShowcase extends React.Component {
         );
     }
 
+    getAverageClass(type) {
+        return classNames({
+            'slider--container-average': true,
+            'slider--container-average_raise': (type === 'average' && this.state.averagesOverlap),
+        });
+    }
+
     getRangeProps() {
         return {
             className: 'slider--range',
@@ -86,7 +103,6 @@ class BundleShowcase extends React.Component {
     getBubbleInputProps() {
         return {
             className: 'slider--bubble-input',
-            onBlur: (event) => this.updatePriceOnInputBlur(event.target.value),
             onChange: (event) => this.updateInputValue(event.target.value),
             type: 'text',
             value: this.state.bubbleInputValue
@@ -114,7 +130,8 @@ class BundleShowcase extends React.Component {
         var refs = ['average', 'top'];
 
         refs.map(function (ref) {
-            let value = this.state[ref].toString().replace('.', '');
+            let parsedValue = parseFloat(this.state[ref]).toFixed(2);
+            let value = parsedValue.replace('.', '');
             let valueForDot = (value > this.maxValue) ? this.maxValue : value;
             let newPosition = (valueForDot / (this.maxValue + 50)) * 100;
 
@@ -127,9 +144,35 @@ class BundleShowcase extends React.Component {
         var newAvg = ((this.state.average * total) + parseFloat(this.state.bubbleInputValue)) / (total + 1);
 
         this.setState({
+            average: newAvg.toFixed(2),
+            averagesOverlap: this.averagesOverlap(),
+            top: this.getTopAverage(),
             total: total + 1,
-            average: newAvg.toFixed(2)
         }, this.updateAveragesPosition);
+    }
+
+    getTopAverage() {
+        var i;
+        var percentage;
+        var sortedArray;
+        var topTen;
+
+        for (i = 0; i < this.topSales.length; i += 1) {
+            let newValue = parseFloat(this.state.bubbleInputValue);
+
+            if (newValue >= this.state.top) {
+                this.topSales.push(newValue);
+                break;
+            }
+        }
+
+        percentage = Math.ceil((10 * this.topSales.length) / 100);
+
+        sortedArray = this.topSales.sort((num1, num2) => num2 - num1);
+
+        topTen = sortedArray.slice(0, percentage);
+
+        return (topTen.reduce((num1, num2) => num1 + num2) / topTen.length);
     }
 
     updateRefPosition(ref, optionalOffset, rangeValue) {
@@ -163,22 +206,26 @@ class BundleShowcase extends React.Component {
 
     updateInputValue(value) {
         var reg = /^([0-9]+((.)[0-9]{0,2}))$/;
+        var parsedValue = parseFloat(value.replace('.', ''));
 
         if (reg.test(value)) {
             value = parseFloat(value).toFixed(2);
+            parsedValue = parseFloat(value.replace('.', ''));
 
             this.setState({
                 bubbleInputValue: value,
-            });
+                rangeValue: parsedValue
+            }, () => this.updateDrawingsPositions(parsedValue));
         }
     }
 
-    updatePriceOnInputBlur(value) {
-        var parsedValue = parseFloat(value.replace('.', ''));
+    averagesOverlap() {
+        var minDifference = 5;
+        var average = parseFloat(this.state.average);
+        var top = parseFloat(this.state.top);
 
-        this.setState({
-            rangeValue: parsedValue
-        }, () => this.updateDrawingsPositions(parsedValue));
+        return (top - average) < minDifference ||
+            (this.maxPrice - average) < minDifference && (this.maxPrice - top) < minDifference;
     }
 
     isFirefox() {

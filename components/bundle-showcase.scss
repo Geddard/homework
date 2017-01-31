@@ -1,3 +1,5 @@
+@import 'prefixer';
+
 .bundle-showcase {
     background-image: url('/res/img/slider_background.png');
     border-radius: 5px;
@@ -24,14 +26,24 @@
             &-average {
                 font-size: 10px;
                 font-weight: 300;
-                min-width: 79px;
                 position: absolute;
                 top: 10px;
+                width: 100px;
+
+                &_raise {
+                    top: 0;
+
+                    &::after {
+                        margin-top: 10px;
+                    }
+                }
 
                 &::after {
+                    @include prefix(transform, translateY(7px), moz);
                     color: #5A5858;
                     content: '\25CF';
                     font-size: 12px;
+                    font-size-adjust: .3;
                     left: 30px;
                     position: absolute;
                     top: 18px;
