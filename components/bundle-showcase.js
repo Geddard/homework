@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 class BundleShowcase extends React.Component {
 
-    constructor() {
+    constructor(props, context) {
         super();
 
         this.topSales = [
@@ -24,7 +24,7 @@ class BundleShowcase extends React.Component {
             bubbleInputValue: 14.99,
             rangeValue: 1499,
             top: 19.50,
-            total: 20
+            total: context.gamesSoldAmount
         };
     }
 
@@ -54,7 +54,7 @@ class BundleShowcase extends React.Component {
                     ${this.state.average} (Average)
                 </div>
                 <div ref="top" className={this.getAverageClass()}>
-                    ${this.state.top} (Top 10%)
+                    ${this.state.top.toFixed(2)} (Top 10%)
                 </div>
                 <input {...this.getRangeProps()} />
                 <div ref="sliderArrowDrawing" className="slider--arrow" />
@@ -64,12 +64,14 @@ class BundleShowcase extends React.Component {
 
     renderBubbleContent() {
         return (
-            <div ref="sliderBubble" className={this.getBubbleClass()}>
+            <div ref="sliderBubble" className="slider--bubble">
                 <div className="slider--bubble-currency">$</div>
                 <input {...this.getBubbleInputProps()}/>
                 <button onClick={() => this.updateAverages()} className="slider--bubble-button">
                     Checkout Now
                 </button>
+                <div className="slider--bubble-info" />
+                <div className="slider--bubble-info-text">Click the price to type in manually</div>
             </div>
         );
     }
@@ -101,13 +103,6 @@ class BundleShowcase extends React.Component {
             type: 'text',
             value: this.state.bubbleInputValue
         };
-    }
-
-    getBubbleClass() {
-        return classNames({
-            'slider--bubble': true,
-            'slider--bubble_floating': !this.isOldIE()
-        });
     }
 
     updateRangeValue(value) {
@@ -143,6 +138,8 @@ class BundleShowcase extends React.Component {
             top: this.getTopAverage(),
             total: total + 1,
         }, this.updateAveragesPosition);
+
+        this.context.addGamesSold();
     }
 
     getTopAverage() {
@@ -225,3 +222,7 @@ class BundleShowcase extends React.Component {
 
 export default BundleShowcase;
 
+BundleShowcase.contextTypes = {
+    addGamesSold: React.PropTypes.func,
+    gamesSoldAmount: React.PropTypes.number
+};
