@@ -20,24 +20,22 @@
     "babelify": "^7.3.0",
     "browserify": "^13.3.0",
     "classnames": "^2.2.5",
+    "connect-livereload": "^0.6.0",
+    "eslint-plugin-react": "^6.9.0",
     "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^3.0.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-notify": "^2.2.0",
     "gulp-sass": "^3.1.0",
+    "gulp-scss-lint": "^0.4.0",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^2.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router": "^3.0.2",
     "vinyl-source-stream": "^1.1.0"
-  },
-  "devDependencies": {
-    "connect-livereload": "^0.6.0",
-    "eslint-plugin-react": "^6.9.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-nodemon": "^2.2.1",
-    "gulp-notify": "^2.2.0",
-    "gulp-scss-lint": "^0.4.0"
   }
 }

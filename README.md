@@ -15,7 +15,6 @@
 
 * Start the app:
 
-1)
     Option 1) Run "gulp heroku:production" for production build, then "node server.js" to start the server.
 
     Option 2) Run "gulp" for dev build, nodemon will start node by itself.
