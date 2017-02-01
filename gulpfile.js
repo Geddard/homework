@@ -74,6 +74,7 @@ gulp.task('lint-scss', function () {
 
 gulp.task('sass', function () {
     gulp.src(scssPaths)
+        .pipe(concat('globals.scss'))
         .pipe(sass({outputStyle: 'compressed'}))
         .on('error', handleErrors)
         .pipe(concat('styles.css'))

@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { gamesData } from 'bootstrap-data/divinity-bundle-data';
 
 class BundleShowcase extends React.Component {
 
-    constructor() {
+    constructor(props, context) {
         super();
 
         this.topSales = [
@@ -24,7 +25,7 @@ class BundleShowcase extends React.Component {
             bubbleInputValue: 14.99,
             rangeValue: 1499,
             top: 19.50,
-            total: 20
+            total: context.gamesSoldAmount
         };
     }
 
@@ -37,6 +38,7 @@ class BundleShowcase extends React.Component {
     render() {
         return (
             <div className="bundle-showcase">
+                {this.renderGameLogos()}
                 <div className="slider slider--container">
                     <div className="slider--container-price-limit slider--container-price-limit_min">$0.99</div>
                     {this.renderSliderSection()}
@@ -47,6 +49,41 @@ class BundleShowcase extends React.Component {
         );
     }
 
+    renderGameLogos() {
+        return (
+            <div className="game-logos--container">
+                {gamesData.map((game, index) => this.renderGameLogoContainer(game, index))}
+            </div>
+        );
+    }
+
+    renderGameLogoContainer(game, index) {
+        return (
+            <div key={index} className="game">
+                {this.renderPlusSign(index)}
+                <div className={this.getGameLogoClass(game, index)} />
+                <div className="game--description">
+                    <a href="#" className="game--description-link">{game.link}</a>
+                    <div className="game--description-price">{game.normalPrice}</div>
+                    <div className="game--description-goodies">{game.goodies}</div>
+                </div>
+                <div className="game--tier"></div>
+            </div>
+        );
+    }
+
+    renderPlusSign(index) {
+        var plusSign = null;
+        var inputValue = parseFloat(this.state.bubbleInputValue);
+
+        if (index === 1 && inputValue >= this.state.average ||
+            index === 2 && inputValue >= this.state.top) {
+            plusSign = <div className="game--plus" />;
+        }
+
+        return plusSign;
+    }
+
     renderSliderSection() {
         return (
             <div className="slider--container-range-area">
@@ -54,7 +91,7 @@ class BundleShowcase extends React.Component {
                     ${this.state.average} (Average)
                 </div>
                 <div ref="top" className={this.getAverageClass()}>
-                    ${this.state.top} (Top 10%)
+                    ${this.state.top.toFixed(2)} (Top 10%)
                 </div>
                 <input {...this.getRangeProps()} />
                 <div ref="sliderArrowDrawing" className="slider--arrow" />
@@ -64,14 +101,29 @@ class BundleShowcase extends React.Component {
 
     renderBubbleContent() {
         return (
-            <div ref="sliderBubble" className={this.getBubbleClass()}>
+            <div ref="sliderBubble" className="slider--bubble">
                 <div className="slider--bubble-currency">$</div>
                 <input {...this.getBubbleInputProps()}/>
                 <button onClick={() => this.updateAverages()} className="slider--bubble-button">
                     Checkout Now
                 </button>
+                <div className="slider--bubble-info" />
+                <div className="slider--bubble-info-text">Click the price to type in manually</div>
             </div>
         );
+    }
+
+    getGameLogoClass(game, index) {
+        var inputValue = parseFloat(this.state.bubbleInputValue);
+
+        return classNames({
+           'game--logo': true,
+           'game--logo_first': !index,
+           'game--logo_second': index === 1,
+           'game--logo_second-grayed': index === 1 && inputValue < this.state.average,
+           'game--logo_third': index === 2,
+           'game--logo_third-grayed': index === 2 && inputValue < this.state.top,
+        });
     }
 
     getAverageClass(type) {
@@ -103,13 +155,6 @@ class BundleShowcase extends React.Component {
         };
     }
 
-    getBubbleClass() {
-        return classNames({
-            'slider--bubble': true,
-            'slider--bubble_floating': !this.isOldIE()
-        });
-    }
-
     updateRangeValue(value) {
         this.updateDrawingsPositions(value);
         this.updatePriceFromRange(value);
@@ -135,14 +180,17 @@ class BundleShowcase extends React.Component {
 
     updateAverages() {
         var total = this.state.total;
+        var newAverageTop = this.getTopAverage();
         var newAvg = ((this.state.average * total) + parseFloat(this.state.bubbleInputValue)) / (total + 1);
 
         this.setState({
             average: newAvg.toFixed(2),
-            averagesOverlap: this.averagesOverlap(),
-            top: this.getTopAverage(),
+            averagesOverlap: this.averagesOverlap(newAvg, newAverageTop),
+            top: newAverageTop,
             total: total + 1,
         }, this.updateAveragesPosition);
+
+        this.context.addGamesSold();
     }
 
     getTopAverage() {
@@ -213,15 +261,17 @@ class BundleShowcase extends React.Component {
         }
     }
 
-    averagesOverlap() {
+    averagesOverlap(average, top) {
         var minDifference = 5;
-        var average = parseFloat(this.state.average);
-        var top = parseFloat(this.state.top);
 
-        return (top - average) < minDifference ||
+        return (top - average) <= minDifference ||
             (this.maxPrice - average) < minDifference && (this.maxPrice - top) < minDifference;
     }
 }
 
 export default BundleShowcase;
 
+BundleShowcase.contextTypes = {
+    addGamesSold: React.PropTypes.func,
+    gamesSoldAmount: React.PropTypes.number
+};

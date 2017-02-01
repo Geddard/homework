@@ -32,20 +32,23 @@ class BundleFooter extends React.Component {
 
         return (
             <div className="goals">
-                <div className="goals--title">
-                    <div className="goals--title-text">
-                        {gamesSoldData.title}
-                    </div>
-                    <div className="goals--numbers" />
-                    <div className="goals--current-title">
-                        {currentGoalData.currentAmount}
-                    </div>
-                    <div className="goals--current-description">
-                        {currentGoalData.goalDescription}
-                    </div>
-                    {this.renderThumbnailSection()}
-                    <div className="goals--milestones" />
+                <div className="goals--title" />
+                <div className="goals--title-text">
+                    {gamesSoldData.title}
                 </div>
+                <div className="goals--numbers">
+                <div className="goals--numbers-text">
+                    {this.context.gamesSoldAmount.toLocaleString().replace(',', ' ')}
+                </div>
+                </div>
+                <div className="goals--current-title">
+                    {currentGoalData.currentAmount}
+                </div>
+                <div className="goals--current-description">
+                    {currentGoalData.goalDescription}
+                </div>
+                {this.renderThumbnailSection()}
+                <div className="goals--milestones" />
             </div>
         );
     }
@@ -80,4 +83,8 @@ class BundleFooter extends React.Component {
 }
 
 export default BundleFooter;
+
+BundleFooter.contextTypes = {
+    gamesSoldAmount: React.PropTypes.number
+};
 
