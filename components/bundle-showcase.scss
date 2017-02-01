@@ -1,13 +1,86 @@
-@import 'prefixer';
-
 .bundle-showcase {
     background-image: url('/res/img/slider_background.png');
     border-radius: 5px;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .15);
+    box-shadow: 0 0 23px -7px #000;
     height: 444px;
     margin: 0 auto 60px;
     position: relative;
     width: 950px;
+
+    .game {
+        display: inline-block;
+        padding: 23px 45px 0;
+        position: relative;
+        vertical-align: top;
+
+        &--plus {
+            background-image: url('/res/img/game_logos.png');
+            background-position: -12px -33px;
+            height: 30px;
+            left: -15px;
+            position: absolute;
+            top: 50px;
+            width: 30px;
+        }
+
+        &-logos--container {
+            height: 100%;
+            width: 100%;
+        }
+
+        &--logo {
+            background-image: url('/res/img/game_logos.png');
+            height: 114px;
+            width: 207px;
+
+            &_first {
+                background-position: -51px -9px;
+            }
+
+            &_second {
+                background-position: -265px -16px;
+            }
+
+            &_third {
+                background-position: 262px -31px;
+                height: 71px;
+                margin: 17px 0 0 -10px;
+                margin-top: 17px;
+                width: 240px;
+            }
+        }
+
+        &--description {
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            font-size: 13px;
+            font-weight: 300;
+            left: 23px;
+            padding: 10px;
+            position: absolute;
+            top: 155px;
+            width: 245px;
+
+            &-link {
+                display: inline-block;
+                font-weight: 600;
+                padding-right: 2px;
+
+                &:visited {
+                    color: #949494;
+                }
+            }
+
+            &-price {
+                display: inline-block;
+            }
+
+            &-goodies {
+                color: #636363;
+                font-weight: 600;
+            }
+        }
+    }
 
     .slider {
         position: relative;
@@ -15,7 +88,7 @@
 
         &--container {
             background-color: #e5e5e5;
-            border-radius: 5px;
+            border-radius: 0 0 5px 5px;
             border-top: 1px solid #ccc;
             bottom: 0;
             height: 170px;
