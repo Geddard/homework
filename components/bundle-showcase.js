@@ -76,8 +76,8 @@ class BundleShowcase extends React.Component {
         var plusSign = null;
         var inputValue = parseFloat(this.state.bubbleInputValue);
 
-        if (index === 1 && inputValue > this.state.average ||
-            index === 2 && inputValue > this.state.top) {
+        if (index === 1 && inputValue >= this.state.average ||
+            index === 2 && inputValue >= this.state.top) {
             plusSign = <div className="game--plus" />;
         }
 
@@ -114,17 +114,15 @@ class BundleShowcase extends React.Component {
     }
 
     getGameLogoClass(game, index) {
+        var inputValue = parseFloat(this.state.bubbleInputValue);
+
         return classNames({
            'game--logo': true,
            'game--logo_first': !index,
            'game--logo_second': index === 1,
+           'game--logo_second-grayed': index === 1 && inputValue < this.state.average,
            'game--logo_third': index === 2,
-        });
-    }
-
-    getPlusSignClass(type) {
-        return classNames({
-
+           'game--logo_third-grayed': index === 2 && inputValue < this.state.top,
         });
     }
 

@@ -8,7 +8,7 @@ class App extends React.Component {
         super();
 
         this.state = {
-            gamesSoldAmount: 0
+            gamesSoldAmount: 980
         };
     }
 
