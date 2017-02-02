@@ -262,7 +262,7 @@
             margin: auto;
             position: absolute;
             top: 64px;
-            width: 217px;
+            width: 201px;
 
             &_fixed {
                 position: relative;
@@ -302,9 +302,10 @@
                 color: #464545;
                 cursor: pointer;
                 font-weight: bold;
+                font-size: 12px;
                 height: 35px;
-                margin-right: 10px;
-                width: 125px;
+                vertical-align: middle;
+                width: 107px;
 
                 &:active {
                     background-image: linear-gradient(to top, #afcf00, #8FA800);
@@ -325,6 +326,7 @@
                     left: 20px;
                     position: absolute;
                     top: 63px;
+                    width: 185px;
                 }
             }
 
