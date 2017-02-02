@@ -71,7 +71,7 @@ class BundleShowcase extends React.Component {
                         ${this.state.average} (Average)
                     </div>
                     <div className="slider--container-average_fixed">
-                        ${this.state.top} (Top 10%)
+                        ${this.state.top.toFixed(2)} (Top 10%)
                     </div>
                     {this.renderBubbleContent('fixed')}
                 </div>
@@ -85,28 +85,50 @@ class BundleShowcase extends React.Component {
         return (
             <div key={index} className="game">
                 {this.renderPlusSign(index)}
-                <div className={this.getGameLogoClass(game, index)} />
+                <div className={this.getGameLogoClass(index)} />
                 <div className="game--description">
                     <a href="#" className="game--description-link">{game.link}</a>
                     <div className="game--description-price">{game.normalPrice}</div>
                     <div className="game--description-goodies">{game.goodies}</div>
                 </div>
-                <div className={this.getTierClass(game, index)}></div>
+                {this.renderTier(index)}
             </div>
         );
     }
 
     renderPlusSign(index) {
         var plusSign = null;
-        var inputValue = parseFloat(this.state.bubbleInputValue);
 
-        if (index === 1 && inputValue >= this.state.average ||
-            (index === 2 && inputValue >= this.state.top) ||
-            (index === 2 && inputValue === this.maxPrice)) {
+        if (index && !this.isBelowAverage(index)) {
             plusSign = <div className="game--plus" />;
         }
 
         return plusSign;
+    }
+
+    renderTier(index) {
+        var text;
+
+        if (!index) {
+            text = 'Below Average';
+        }else if (index === 1) {
+            text = 'Above Average (from $' + this.state.average + ')';
+        } else if (index === 2) {
+            let topPrice = this.state.top;
+
+            if (topPrice > this.maxPrice) {
+                topPrice = this.maxPrice;
+            }
+
+            text = 'Top supporter (from $' + topPrice.toFixed(2) + ')';
+        }
+
+        return (
+            <div className={this.getTierClass(game, index)}>
+                <div className="game--tier-image" />
+                <div className="game--tier-text">{text}</div>
+            </div>
+        );
     }
 
     renderSlider() {
@@ -138,7 +160,7 @@ class BundleShowcase extends React.Component {
         );
     }
 
-    getGameLogoClass(game, index) {
+    getGameLogoClass(index) {
         var inputValue = parseFloat(this.state.bubbleInputValue);
 
         return classNames({
@@ -152,8 +174,11 @@ class BundleShowcase extends React.Component {
         });
     }
 
-    getTierClass() {
-        // IMPLEMENT TIERS LOGIC
+    getTierClass(game, index) {
+        return classNames({
+            'game--tier': true,
+            'game--tier_locked': this.isBelowAverage(index)
+        });
     }
 
     getBubbleClass(type) {
@@ -307,6 +332,13 @@ class BundleShowcase extends React.Component {
 
         return (top - average) <= minDifference ||
             (this.maxPrice - average) < minDifference && (this.maxPrice - top) < minDifference;
+    }
+
+    isBelowAverage(index) {
+        var inputValue = parseFloat(this.state.bubbleInputValue);
+
+        return ((index === 1 && inputValue < this.state.average) ||
+                ((index === 2 && inputValue < this.state.top) && (index === 2 && inputValue !== this.maxPrice)));
     }
 
     isIE() {
