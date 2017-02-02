@@ -88,6 +88,39 @@
                 font-weight: 600;
             }
         }
+
+        &--tier {
+            color: #718405;
+            font-size: 13px;
+            font-weight: 500;
+            position: absolute;
+            right: 0;
+            top: 225px;
+            width: 100%;
+
+            &-image {
+                background-image: url('/res/img/extras.png');
+                background-position: 145px 91px;
+                display: inline-block;
+                height: 20px;
+                padding-right: 5px;
+                vertical-align: top;
+                width: 15px;
+            }
+
+            &-text {
+                display: inline-block;
+            }
+
+            &_locked {
+                color: #636363;
+
+                .game--tier-image {
+                    background-image: url('/res/img/extras.png');
+                    background-position: 101px 91px;
+                }
+            }
+        }
     }
 
     .slider {
@@ -107,9 +140,15 @@
             &-average {
                 font-size: 10px;
                 font-weight: 300;
+                pointer-events: none;
                 position: absolute;
                 top: 10px;
                 width: 100px;
+
+                &_fixed {
+                    display: inline-block;
+                    padding: 20px 50px;
+                }
 
                 &_raise {
                     top: 0;
@@ -224,6 +263,11 @@
             position: absolute;
             top: 64px;
             width: 217px;
+
+            &_fixed {
+                position: relative;
+                top: 0;
+            }
 
             &::before {
                 border-bottom: solid 8px #A6A6A6;
