@@ -124,7 +124,7 @@ class BundleShowcase extends React.Component {
         }
 
         return (
-            <div className={this.getTierClass(game, index)}>
+            <div className={this.getTierClass(index)}>
                 <div className="game--tier-image" />
                 <div className="game--tier-text">{text}</div>
             </div>
@@ -174,7 +174,7 @@ class BundleShowcase extends React.Component {
         });
     }
 
-    getTierClass(game, index) {
+    getTierClass(index) {
         return classNames({
             'game--tier': true,
             'game--tier_locked': this.isBelowAverage(index)
