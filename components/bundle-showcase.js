@@ -245,9 +245,11 @@ class BundleShowcase extends React.Component {
     }
 
     updateAverages() {
+        var inputValue = parseFloat(this.state.bubbleInputValue);
         var total = this.state.total;
         var newAverageTop = this.getTopAverage();
         var newAvg = ((this.state.average * total) + parseFloat(this.state.bubbleInputValue)) / (total + 1);
+        var amountSold = 1;
 
         this.setState({
             average: newAvg.toFixed(2),
@@ -256,7 +258,15 @@ class BundleShowcase extends React.Component {
             total: total + 1,
         }, this.updateAveragesPosition);
 
-        this.context.addGamesSold();
+        if (inputValue >= this.state.average) {
+            amountSold += 1;
+        }
+
+        if (inputValue >= this.state.top || inputValue === this.maxPrice) {
+            amountSold += 1;
+        }
+
+        this.context.addGamesSold(amountSold);
     }
 
     getTopAverage() {
