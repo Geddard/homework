@@ -14,7 +14,7 @@ class App extends React.Component {
 
     getChildContext() {
         return {
-            addGamesSold: () => this.addGamesSold(),
+            addGamesSold: (amount) => this.addGamesSold(amount),
             gamesSoldAmount: this.state.gamesSoldAmount
         };
     }
@@ -28,9 +28,9 @@ class App extends React.Component {
         );
     }
 
-    addGamesSold() {
+    addGamesSold(amount) {
         this.setState({
-            gamesSoldAmount: this.state.gamesSoldAmount + 1
+            gamesSoldAmount: this.state.gamesSoldAmount + amount
         });
     }
 }

@@ -36,11 +36,7 @@ class BundleFooter extends React.Component {
                 <div className="goals--title-text">
                     {gamesSoldData.title}
                 </div>
-                <div className="goals--numbers">
-                <div className="goals--numbers-text">
-                    {this.context.gamesSoldAmount.toLocaleString().replace(',', ' ')}
-                </div>
-                </div>
+                {this.renderGamesSoldCounter()}
                 <div className="goals--current-title">
                     {currentGoalData.currentAmount}
                 </div>
@@ -51,6 +47,28 @@ class BundleFooter extends React.Component {
                 <div className="goals--milestones" />
             </div>
         );
+    }
+
+    renderGamesSoldCounter() {
+        var contentToRender = null;
+
+        if (!this.isIE()) {
+            contentToRender = (
+                <div className="goals--numbers">
+                    <div className="goals--numbers-text">
+                        {this.context.gamesSoldAmount.toLocaleString().replace(',', ' ')}
+                    </div>
+                </div>
+            );
+        } else {
+            contentToRender = (
+                <div className="goals--numbers-text goals--numbers-text_simple">
+                    {this.context.gamesSoldAmount.toLocaleString().replace(',', ' ')}
+                </div>
+            );
+        }
+
+        return contentToRender;
     }
 
     renderGoodie(item, index) {
@@ -79,6 +97,12 @@ class BundleFooter extends React.Component {
 
     getIconClass(icon) {
         return classNames('item--icon', 'item--icon_' + icon);
+    }
+
+    isIE() {
+        var isOldIe = (navigator.userAgent.toLowerCase().indexOf('msie') != -1);
+
+        return isOldIe || (!!window.MSInputMethodContext && !!document.documentMode);
     }
 }
 
